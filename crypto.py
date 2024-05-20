@@ -1,5 +1,4 @@
 alphabet=list(map(chr,range(97,123)))#creates list with alphabet
-print(alphabet)
 
 '''
 def get_key(key): #take string and get numerical key as a list of integers
@@ -11,18 +10,29 @@ def get_key(key): #take string and get numerical key as a list of integers
 print(get_key('cat'))
 '''
 
-def encrypt(plain,key): #takes plain text and key and returns encrypted text
+def substitution(plain,key): #takes plain text and key and returns encrypted text using substitution
     ctr=0
-    encrypted=[]
+    encrypted=""
     for i in plain:
         if i in alphabet:
-            encrypted.append(alphabet[(alphabet.index(i)+alphabet.index(key[ctr%len(key)]))%len(alphabet)])
+            encrypted=encrypted+alphabet[(alphabet.index(i)+alphabet.index(key[ctr%len(key)]))%len(alphabet)]
             ctr+=1
 
         else:
-            encrypted.append(i)
-    str=""
-    crypt=str.join(encrypted)
-    return crypt
+            encrypted=encrypted+i
+    return encrypted
 
-print(encrypt('aaaa','ac'))
+
+def desubstitution(encrypted,key): #takes encrypted text and key. Returns Plain text.
+    ctr=0
+    decrypted=""
+    for i in encrypted:
+        if i in alphabet:
+            decrypted=decrypted+alphabet[(alphabet.index(i)-alphabet.index(key[ctr%len(key)]))%len(alphabet)]
+            ctr+=1
+        else:
+            decrypted=decrypted+i
+    return decrypted
+
+print(substitution('I am in Dahab','sebas'))
+print(desubstitution('I sq jn Dszec','sebas'))
