@@ -1,6 +1,9 @@
+import re
+
+
 alphabet=list(map(chr,range(97,123)))#creates list with alphabet
 
-def check_key(key):
+def check_key(key):#key validity check
     for i in (key):
         if i not in alphabet:
             raise ValueError('Invalid key')
@@ -31,5 +34,15 @@ def desubstitution(encrypted,key): #takes encrypted text and key. Returns Plain 
             decrypted=decrypted+i
     return decrypted
 
+def frequencyAnalysis(encrypted):
+    frequencies = {letter: 0 for letter in alphabet}
+    for letter in alphabet:
+        frequencies[letter]=len(re.findall(letter,encrypted))
+    return frequencies
+        
+
+
+
 print(substitution('I am in Dahab','sebas'))
 print(desubstitution('I sq jn Dszec','sebas'))
+print(frequencyAnalysis("abcd e asdasd asdasd"))
