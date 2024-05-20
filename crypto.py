@@ -1,16 +1,12 @@
 alphabet=list(map(chr,range(97,123)))#creates list with alphabet
 
-'''
-def get_key(key): #take string and get numerical key as a list of integers
-    numkey=[]
-    for i in list(key):
-        numkey.append(alphabet.index(i))
-    return numkey
-
-print(get_key('cat'))
-'''
+def check_key(key):
+    for i in (key):
+        if i not in alphabet:
+            raise ValueError('Invalid key')
 
 def substitution(plain,key): #takes plain text and key and returns encrypted text using substitution
+    check_key(key)
     ctr=0
     encrypted=""
     for i in plain:
@@ -24,6 +20,7 @@ def substitution(plain,key): #takes plain text and key and returns encrypted tex
 
 
 def desubstitution(encrypted,key): #takes encrypted text and key. Returns Plain text.
+    check_key(key)
     ctr=0
     decrypted=""
     for i in encrypted:
