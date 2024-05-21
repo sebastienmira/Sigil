@@ -6,9 +6,16 @@
 
 {% block main %}
     <div class="container">
-        <label for="plaintext">Plain Text</label>
-        <textarea class="form-control" id="plaintext" rows="3">    </textarea>
+        <form>
+            <label for="plain">Plain Text</label>
+            <textarea class="form-control" id="plain" name="plain" rows="3"></textarea>
+            
+            <label for="key">Key</label>
+            <textarea class="form-control" id="key" name="key" rows="3"></textarea>
+
+            <button class="btn" type="submit">Encrypt</button>
+        </form>
         <label for="encrypted">Encrypted Text</label>
-        <textarea class="form-control" id="encrypted" rows="3">    </textarea>
+        <textarea class="form-control" id="encrypted" name="encrypted" rows="3">  {{encrypted}}  </textarea>
     </div>
 {% endblock %}
