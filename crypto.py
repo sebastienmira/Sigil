@@ -43,7 +43,7 @@ def desubstitution(encrypted,key): #takes encrypted text and key. Returns Plain 
             decrypted=decrypted+i
     return decrypted
 
-def frequencyAnalysis(encrypted):
+def frequencyAnalysis(encrypted): #analyzes frequency of each letter in text
     frequencies = {letter: 0 for letter in alphabet}
     for letter in alphabet:
         frequencies[letter]=len(re.findall(letter,encrypted))
@@ -60,6 +60,22 @@ def histFreqAnalysis(encrypted): #histogram for frquency analysis
     ax.plot(alphabet,frequencies, linestyle='',marker='')
     ax.stairs(frequencies, color='black')
     return fig
+
+
+def splitRows(text,period): #split text into rows to perform vigenere frequency analysis
+    rows=[]
+    ctr=0
+    for i in range(period):#intialize rows
+        rows.append("")
+    for i in text:
+        if i in alphabet:
+            rows[ctr%(period)]=rows[ctr%(period)]+i
+            ctr+=1
+    return rows
+
+print(splitRows("abcdefghi",3))
+
+
 
 '''
 print(substitution('I am in Dahab','sebas'))
