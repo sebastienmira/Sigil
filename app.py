@@ -9,6 +9,11 @@ app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
 
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+
 @app.route('/encrypt', methods=["GET","POST"])
 def encrypt():
     if request.method =="POST":
