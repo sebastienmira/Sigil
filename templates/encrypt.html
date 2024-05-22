@@ -1,12 +1,12 @@
 {% extends "layout.html" %}
 
 {% block title %}
-    Index
+    Encrypt
 {% endblock %}
 
 {% block main %}
     <div class="container">
-        <form action="/" method="post">
+        <form action="/encrypt" method="post">
             <label for="plain">Plain Text</label>
             <textarea class="form-control" id="plain" name="plain" rows="3">{{plain}}</textarea>
             
@@ -15,7 +15,15 @@
 
             <button class="btn" type="submit">Encrypt</button>
         </form>
-        <label for="encrypted">Encrypted Text</label>
-        <textarea class="form-control" id="encrypted" name="encrypted" rows="3">  {{encrypted}}  </textarea>
+
+
+        {% if encrypted %}
+            <h4>Encrypted text:</h4>
+            <p>{{encrypted}}</p>
+        {% endif %} 
+        {% if error %}
+            <h4>Error:</h4>
+            <p>{{error}}</p>
+        {% endif %} 
     </div>
 {% endblock %}
