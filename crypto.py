@@ -28,9 +28,9 @@ def substitution(plain,key): #takes plain text and key and returns encrypted tex
 
 
 def desubstitution(encrypted,key): #takes encrypted text and key. Returns Plain text.
-    plain=plain.lower()
+    encrypted=encrypted.lower()
     key=key.lower()
-    
+
     check_key(key)
     ctr=0
     decrypted=""

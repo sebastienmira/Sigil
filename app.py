@@ -27,3 +27,17 @@ def encrypt():
             error=str(err)
             return render_template('encrypt.html', error=error, plain=plain, key=key)
     return render_template("encrypt.html")
+
+@app.route('/decrypt', methods=["GET","POST"])
+def decrypt():
+    if request.method =="POST":
+        encrypted=request.form.get("encrypted")
+        key=request.form.get("key")
+        
+        try:
+            plain=crypto.desubstitution(encrypted,key)
+            return render_template('decrypt.html', plain=plain, encrypted=encrypted, key=key)
+        except ValueError as err:
+            error=str(err)
+            return render_template('decrypt.html', error=error, encrypted=encrypted, key=key)
+    return render_template("decrypt.html")
