@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Analysis
+{% endblock %}
+
+{% block main %}
+    <div class="container">
+        <form action="/analysis" method="post">
+            <label for="encrypted">Encrypted text</label>
+            <textarea class="form-control" id="encrypted" name="encrypted" rows="3" required>{{encrypted}}</textarea>
+
+            <button class="btn" type="submit">Analyse</button>
+        </form>
+
+
+
+        <h4>Frequency analysis</h4>
+        <p>{{analysis}}</p>
+        <img src="">
+
+    </div>
+{% endblock %}

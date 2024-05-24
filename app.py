@@ -41,3 +41,11 @@ def decrypt():
             error=str(err)
             return render_template('decrypt.html', error=error, encrypted=encrypted, key=key)
     return render_template("decrypt.html")
+
+@app.route("/analysis", methods=["GET","POST"])
+def analysis():
+    if request.method =="POST":
+        encrypted=request.form.get("encrypted")
+        analysis=crypto.frequencyAnalysis(encrypted)
+        return render_template("analysis.html", analysis=analysis)
+    return render_template("analysis.html")
