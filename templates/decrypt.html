@@ -6,13 +6,22 @@
 
 {% block main %}
     <div class="container">
-        <form action="/decrypt" method="post">
+
+
+
+        <form action="/decrypt" id='selectForm' method="post">
+            <select class="form-control" name="mode" onchange="submitSelectForm()">
+                <option value="known" {% if mode == 'known' %}selected{% endif %}>Known key</option>
+                <option value="caeser" {% if mode=='caeser' %}selected{% endif %}>Guess Caeser</option>
+            </select>
+
+            
             <label for="encrypted">Encrypted text</label>
             <textarea class="form-control" id="encrypted" name="encrypted" rows="3" required>{{encrypted}}</textarea>
-            
-            <label for="key">Key</label>
-            <textarea class="form-control" id="key" name="key" rows="3">{{key}}</textarea>
-
+            {% if mode=='known' %}
+                <label for="key">Key</label>
+                <textarea class="form-control" id="key" name="key" rows="3">{{key}}</textarea>
+            {% endif %}
             <button class="btn" type="submit">decrypt</button>
         </form>
 
@@ -26,4 +35,12 @@
             <p>{{error}}</p>
         {% endif %} 
     </div>
+
+
+
+    <script>
+        function submitSelectForm() {
+            document.getElementById('selectForm').submit();
+        }
+    </script>
 {% endblock %}

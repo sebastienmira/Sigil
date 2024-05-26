@@ -31,16 +31,24 @@ def encrypt():
 
 @app.route('/decrypt', methods=["GET","POST"])
 def decrypt():
+    mode = request.form.get("mode", "known")  # Default to "known" if not provided
+    encrypted = request.form.get("encrypted", "")
+    key = request.form.get("key", "a")
+    plain = ""
+    error = ""
+
     if request.method =="POST":
-        encrypted=request.form.get("encrypted")
-        key=request.form.get("key")
-        
-        try:
-            plain=crypto.desubstitution(encrypted,key)
-            return render_template('decrypt.html', plain=plain, encrypted=encrypted, key=key)
-        except ValueError as err:
-            error=str(err)
-            return render_template('decrypt.html', error=error, encrypted=encrypted, key=key)
+        if mode=='known':
+            try:
+                plain=crypto.desubstitution(encrypted,key)
+                return render_template('decrypt.html', plain=plain, encrypted=encrypted, key=key, mode=mode)
+            except ValueError as err:
+                error=str(err)
+                return render_template('decrypt.html', error=error, encrypted=encrypted, key=key,mode=mode)
+        elif mode=='caeser':
+            guesses=crypto.guessCaeser(encrypted)
+            return render_template('decrypt.html', plain=guesses, encrypted=encrypted, mode=mode)
+            
     return render_template("decrypt.html")
 
 @app.route("/analysis", methods=["GET","POST"])
