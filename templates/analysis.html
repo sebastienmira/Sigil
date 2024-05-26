@@ -15,9 +15,15 @@
 
 
 
-        <h4>Frequency analysis</h4>
-        <p>{{analysis}}</p>
-        <img src="">
+        {% if analysis %}
+            <h2>Frequency Analysis:</h2>
+            <p>{{ analysis }}</p>
+        {% endif %}
+        
+        {% if img_path %}
+            <h2>Frequency Analysis Histogram:</h2>
+            <img src="{{ img_path }}" alt="Frequency Analysis Histogram">
+        {% endif %} 
 
     </div>
 {% endblock %}

@@ -1,6 +1,7 @@
 from flask import Flask, flash, redirect, render_template, request, session
 from flask_session import Session
 import crypto
+import io
 
 app = Flask(__name__)
 
@@ -47,5 +48,14 @@ def analysis():
     if request.method =="POST":
         encrypted=request.form.get("encrypted")
         analysis=crypto.frequencyAnalysis(encrypted)
-        return render_template("analysis.html", analysis=analysis)
+        
+        img=io.BytesIO()
+        crypto.histFreqAnalysis(encrypted).savefig(img, format='png')
+        img.seek(0)
+
+        img_path = 'static/images/analysis.png'
+        with open(img_path, 'wb') as f:
+            f.write(img.getbuffer())
+
+        return render_template("analysis.html", analysis=analysis, img_path=img_path)
     return render_template("analysis.html")
