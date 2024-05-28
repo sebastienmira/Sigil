@@ -13,6 +13,7 @@
             <select class="form-control" name="mode" onchange="submitSelectForm()">
                 <option value="known" {% if mode == 'known' %}selected{% endif %}>Known key</option>
                 <option value="caeser" {% if mode=='caeser' %}selected{% endif %}>Guess Caeser</option>
+                <option value="vigenere" {% if mode=='vigenere' %}selected{% endif %}>Guess Vigenere</option>
             </select>
 
             
@@ -22,15 +23,13 @@
                 <label for="key">Key</label>
                 <textarea class="form-control" id="key" name="key" rows="3">{{key}}</textarea>
             {% endif %}
-            {% if mode=='caeser' %}
+            {% if mode=='caeser' or mode=='vigenere' %}
                 <label for="attempts">Attempts</label>
-                <select class="form-control" id="attempts" name="attempts">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                  </select>
+                <input class="form-control" type="number" min="1" id="attempts" name="attempts" placeholder="attempts">
+            {% endif %}
+            {% if mode=='vigenere' %}
+                <label for="keylength">Key Length</label>
+                <input class="form-control" type="number" min="1" id="keylength" name="keylength" placeholder="length">   
             {% endif %}
             <button class="btn" type="submit">decrypt</button>
         </form>
