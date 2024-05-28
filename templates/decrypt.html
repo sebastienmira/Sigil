@@ -22,6 +22,16 @@
                 <label for="key">Key</label>
                 <textarea class="form-control" id="key" name="key" rows="3">{{key}}</textarea>
             {% endif %}
+            {% if mode=='caeser' %}
+                <label for="attempts">Attempts</label>
+                <select class="form-control" id="attempts" name="attempts">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                  </select>
+            {% endif %}
             <button class="btn" type="submit">decrypt</button>
         </form>
 

@@ -34,8 +34,10 @@ def decrypt():
     mode = request.form.get("mode", "known")  # Default to "known" if not provided
     encrypted = request.form.get("encrypted", "")
     key = request.form.get("key", "a")
+    attempt = int(request.form.get("attempts","1"))
     plain = ""
     error = ""
+    
 
     if request.method =="POST":
         if mode=='known':
@@ -46,8 +48,8 @@ def decrypt():
                 error=str(err)
                 return render_template('decrypt.html', error=error, encrypted=encrypted, key=key,mode=mode)
         elif mode=='caeser':
-            guesses=crypto.guessCaeser(encrypted)
-            return render_template('decrypt.html', plain=guesses, encrypted=encrypted, mode=mode)
+            guesses=crypto.guessCaeser(encrypted,attempts=attempt)
+            return render_template('decrypt.html', plain=guesses, encrypted=encrypted, mode=mode, attempts=attempt)
             
     return render_template("decrypt.html")
 
