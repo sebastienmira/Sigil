@@ -1,6 +1,7 @@
 import re
 import matplotlib.pyplot as plt
 import itertools
+import numpy as np
 
 freq_in_dict=['e', 'i', 's', 'a', 'r', 'n', 't', 'o', 'l', 'c', 'u', 'd', 'm', 'p', 'g', 'h', 'b', 'y', 'f', 'v', 'z', 'k', 'w', 'x', 'j', 'q']#most common letters in large.txt
 
@@ -109,27 +110,41 @@ def guessCaeser(text, attempts=1, show_message=True):#compares frequency with di
 
 def guessVigenere(text, key_length, attempts=1):
     rows=splitRows(text, key_length)
-    keyguess=[]
+    keyguess=[] #list of lists with the most frequent words in each row
     for i in rows:
         mostfreq=sortedFreq(i,attempts)
-        print(mostfreq)
         keyletter=[]
         for i in range(attempts):
             keyletter.append(alphabet[alphabet.index(mostfreq[i][0])-alphabet.index(freq_in_dict[0])])
         keyguess.append(keyletter)
-        #list(itertools.product(*keyguess)) #all possible permutations
-    return keyguess
-
-
     
+    possiblekeys=[] #list of strings possible keys resulting of the permutation of keyguess
+    possibilities=list(itertools.product(*keyguess)) #all possible permutations
+    for i in possibilities:
+        key=""
+        for j in range(key_length):
+            key=key+i[j]
+        possiblekeys.append(key)
+    return possiblekeys
 
 
+def permutation(keyguess):#take as input list of lists kindof similar to itertools.product but optimized   000 100 010 001 101 110 011 111 200 020 002 
+    ray=np.zeros((len(keyguess),), dtype=int)#array of zeroes
+    return ray
+             
+
+'''
 texto='The Rosetta Stone is a stele composed of granodiorite inscribed with three versions of a decree issued in Memphis, Egypt, in 196 BC during the Ptolemaic dynasty on behalf of King Ptolemy V Epiphanes. The top and middle texts are in Ancient Egyptian using hieroglyphic and Demotic scripts respectively, while the bottom is in Ancient Greek. The decree has only minor differences between the three versions, making the Rosetta Stone key to deciphering the Egyptian scripts. The stone was carved during the Hellenistic period and is believed to have originally been displayed within a temple, possibly at Sais. It was probably moved in late antiquity or during the Mamluk period, and was eventually used as building material in the construction of Fort Julien near the town of Rashid (Rosetta) in the Nile Delta. It was found there in July 1799 by French officer Pierre-François Bouchard during the Napoleonic campaign in Egypt. It was the first Ancient Egyptian bilingual text recovered in modern times, and it aroused widespread public interest with its potential to decipher this previously untranslated hieroglyphic script. Lithographic copies and plaster casts soon began circulating among European museums and scholars. When the British defeated the French they took the stone to London under the Capitulation of Alexandria in 1801. Since 1802, it has been on public display at the British Museum almost continuously and it is the most visited object.'
 
-text=substitution(texto,'cato')
-print(guessVigenere(text,4,3))
+text=substitution(texto,'ghada')
+print(guessVigenere(text,5,2))
 
-
+'''
+#print(list(itertools.product(*guessVigenere(text,5,2))))
+#print(permutation([[0,1],[0,1]]))
+#ray=np.zeros(10, dtype=int)
+#ray[0]=1
+#print(ray)
 
 '''
 dictionary=""
