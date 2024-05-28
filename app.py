@@ -159,3 +159,13 @@ def register():
 
     else:
         return render_template("register.html")
+
+
+@app.route("/chat", methods=["GET", "POST"])
+@login_required
+def chat():
+   if request.method=="POST":
+       return render_template("chat.html")
+   else:
+       return render_template("chat.html")
+
