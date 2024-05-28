@@ -1,4 +1,4 @@
-from flask import Flask, flash, redirect, render_template, request, session
+from flask import Flask, flash, url_for, redirect, render_template, request, session
 from flask_session import Session
 import crypto
 import io
@@ -163,9 +163,18 @@ def register():
 
 @app.route("/chat", methods=["GET", "POST"])
 @login_required
-def chat():
+def search():
    if request.method=="POST":
-       return render_template("chat.html")
+       user=request.form.get("user")
+       return redirect(url_for("chat",user=user))
    else:
-       return render_template("chat.html")
+       return render_template("chatsearch.html")
+   
+@app.route("/chat/<user>", methods=["GET", "POST"])
+@login_required
+def chat(user):
+   if request.method=="POST":
+       return render_template("chat.html", user=user)
+   else:
+       return render_template("chat.html", user=user)
 
