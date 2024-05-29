@@ -194,10 +194,24 @@ def search():
 @app.route("/chat/<chatid>", methods=["GET", "POST"])
 @login_required
 def chat(chatid):
-   if request.method=="POST":
-       return render_template("chat.html", chatid=chatid)
-   else:
-       return render_template("chat.html", chatid=chatid)
+    messages=db.execute("SELECT * FROM messages WHERE chat_id=?", chatid)
+    if request.method=="POST":
+        text=request.form.get("text")
+        key=request.form.get("key")
+        if text and key:
+            encrypted=crypto.substitution(text,key)
+            db.execute("INSERT INTO messages (chat_id,sender_id,message,datetime) VALUES(?,?,?,datetime())", chatid, session["user_id"], encrypted)
+            messages=db.execute("SELECT * FROM messages WHERE chat_id=?", chatid)
+            return render_template("chat.html", chatid=chatid, messages=messages)
+        else:
+            if messages:
+                return render_template("chat.html", chatid=chatid, messages=messages)
+            else:
+                return render_template("chat.html", chatid=chatid)
 
-db= SQL("sqlite:///crypto.db")
-print(db.execute("SELECT * FROM users WHERE username = 'sebas'"))
+    else:
+        if messages:
+            return render_template("chat.html", chatid=chatid, messages=messages)
+        else:
+            return render_template("chat.html", chatid=chatid)
+

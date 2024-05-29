@@ -5,6 +5,23 @@
 {% endblock %}
 
 {% block main %}
-    Chat id is {{chatid}}
+    <p>Chat id is {{chatid}}</p>
+
+    {% for message in messages %}
+        <p>{{message.message}}</p>
+    {% endfor %}
+
+
+    <form action="/chat/{{chatid}}" method="post">
+        <label for="text">Enter your message</label>
+        <textarea class="form-control" id="text" name="text" rows="1" required></textarea>
+        
+        <label for="key">Key</label>
+        <textarea class="form-control" id="key" name="key" rows="1" required></textarea>
+
+        <button class="btn" type="submit">Send</button>
+    </form>
+
 
 {% endblock %}
+
