@@ -204,14 +204,8 @@ def chat(chatid):
             messages=db.execute("SELECT * FROM messages WHERE chat_id=?", chatid)
             return render_template("chat.html", chatid=chatid, messages=messages)
         else:
-            if messages:
-                return render_template("chat.html", chatid=chatid, messages=messages)
-            else:
-                return render_template("chat.html", chatid=chatid)
+            return render_template("chat.html", chatid=chatid, messages=messages)
 
     else:
-        if messages:
-            return render_template("chat.html", chatid=chatid, messages=messages)
-        else:
-            return render_template("chat.html", chatid=chatid)
+        return render_template("chat.html", chatid=chatid,messages=messages)
 
