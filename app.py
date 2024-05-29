@@ -158,23 +158,45 @@ def register():
         return redirect("/")
 
     else:
-        return render_template("register.html")
+        return render_template("register.html")    
+@app.route("/logout")
+def logout():
+    """Log user out"""
+
+    # Forget any user_id
+    session.clear()
+
+    # Redirect user to login form
+    return redirect("/")
 
 
 @app.route("/chat", methods=["GET", "POST"])
 @login_required
 def search():
-   if request.method=="POST":
+    if request.method=="POST":
        user=request.form.get("user")
-       return redirect(url_for("chat",user=user))
-   else:
+       myuserid=session["user_id"]
+       userid=db.execute("SELECT id FROM users WHERE username = ?", user)[0]["id"]
+       if userid:
+            chatid=db.execute("SELECT id FROM chats WHERE (sender_id=? AND receiver_id=?) OR (sender_id=? AND receiver_id=?)", userid, myuserid, myuserid, userid)[0]["id"]
+            if chatid:
+                return redirect(url_for("chat",chatid=chatid))
+            else:
+                db.execute("INSERT INTO chats(sender_id,receiver_id) VALUES(?,?)", myuserid, userid)
+                chatid=db.execute("SELECT id FROM chats WHERE sender_id=? AND receiver_id=?", myuserid, userid)[0]["id"]
+                return redirect(url_for("chat",chatid=chatid))
+       else:
+           return apology("user not found",400)
+    else:
        return render_template("chatsearch.html")
    
 @app.route("/chat/<user>", methods=["GET", "POST"])
 @login_required
-def chat(user):
+def chat(chatid):
    if request.method=="POST":
-       return render_template("chat.html", user=user)
+       return render_template("chat.html", chatid=chatid)
    else:
-       return render_template("chat.html", user=user)
+       return render_template("chat.html", chatid=chatid)
 
+db= SQL("sqlite:///crypto.db")
+print(db.execute("SELECT * FROM users WHERE username = 'sebas'"))
