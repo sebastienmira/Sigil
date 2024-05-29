@@ -176,21 +176,22 @@ def search():
     if request.method=="POST":
        user=request.form.get("user")
        myuserid=session["user_id"]
-       userid=db.execute("SELECT id FROM users WHERE username = ?", user)[0]["id"]
+       userid=db.execute("SELECT id FROM users WHERE username = ?", user)
        if userid:
-            chatid=db.execute("SELECT id FROM chats WHERE (sender_id=? AND receiver_id=?) OR (sender_id=? AND receiver_id=?)", userid, myuserid, myuserid, userid)[0]["id"]
+            userid=userid[0]["id"]
+            chatid=db.execute("SELECT id FROM chats WHERE (sender_id=? AND receiver_id=?) OR (sender_id=? AND receiver_id=?)", userid, myuserid, myuserid, userid)
             if chatid:
-                return redirect(url_for("chat",chatid=chatid))
+                return redirect(url_for("chat",chatid=chatid[0]["id"]))
             else:
                 db.execute("INSERT INTO chats(sender_id,receiver_id) VALUES(?,?)", myuserid, userid)
-                chatid=db.execute("SELECT id FROM chats WHERE sender_id=? AND receiver_id=?", myuserid, userid)[0]["id"]
-                return redirect(url_for("chat",chatid=chatid))
+                chatid=db.execute("SELECT id FROM chats WHERE sender_id=? AND receiver_id=?", myuserid, userid)
+                return redirect(url_for("chat",chatid=chatid[0]["id"]))
        else:
            return apology("user not found",400)
     else:
        return render_template("chatsearch.html")
    
-@app.route("/chat/<user>", methods=["GET", "POST"])
+@app.route("/chat/<chatid>", methods=["GET", "POST"])
 @login_required
 def chat(chatid):
    if request.method=="POST":
