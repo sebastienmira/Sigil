@@ -87,7 +87,7 @@ def analysis():
             img_path = 'static/images/analysis.png'
             with open(img_path, 'wb') as f:
                 f.write(img.getbuffer())
-                
+
 
         return render_template("analysis.html", analysis=analysis, img_path=img_path, encrypted=encrypted, keylength=keylength)
     return render_template("analysis.html")
@@ -199,6 +199,7 @@ def search():
 @login_required
 def chat(chatid):
     messages=db.execute("SELECT * FROM messages WHERE chat_id=?", chatid)
+    user=db.execute("SELECT username FROM users WHERE (id = (SELECT sender_id FROM chats WHERE id=?) OR (SELECT receiver_id FROM chats WHERE id=?)) AND id!=?", chatid, chatid, session["user_id"])
     if request.method=="POST":
         text=request.form.get("text")
         key=request.form.get("key")
@@ -206,9 +207,9 @@ def chat(chatid):
             encrypted=crypto.substitution(text,key)
             db.execute("INSERT INTO messages (chat_id,sender_id,message,datetime) VALUES(?,?,?,datetime())", chatid, session["user_id"], encrypted)
             messages=db.execute("SELECT * FROM messages WHERE chat_id=?", chatid)
-            return render_template("chat.html", chatid=chatid, messages=messages)
+            return render_template("chat.html", chatid=chatid, messages=messages, user=user)
         else:
-            return render_template("chat.html", chatid=chatid, messages=messages)
+            return render_template("chat.html", chatid=chatid, messages=messages, user=user)
 
     else:
-        return render_template("chat.html", chatid=chatid,messages=messages)
+        return render_template("chat.html", chatid=chatid,messages=messages, user=user)

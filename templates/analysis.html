@@ -21,7 +21,7 @@
 
         {% if analysis %}
             <h2>Frequency Analysis:</h2>
-            <table>
+            <table class="table">
                 <thead>
                     <tr>
                         {% for letter, frequency in analysis[0].items() %}
@@ -33,7 +33,7 @@
                     {% for cell in analysis %}
                         <tr>
                             {% for letter, frequency in cell.items() %}
-                                <th>{{frequency}}</th>
+                                <td>{{frequency}}</td>
                             {% endfor %}
                         </tr>
                     {% endfor %}
