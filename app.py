@@ -208,4 +208,3 @@ def chat(chatid):
 
     else:
         return render_template("chat.html", chatid=chatid,messages=messages)
-

@@ -5,10 +5,11 @@
 {% endblock %}
 
 {% block main %}
-    <p>Chat id is {{chatid}}</p>
+    <div>Chat id is {{chatid}}</div>
+
 
     {% for message in messages %}
-        <p>{{message.message}}</p>
+        <div class="message">{{message.message}}</div>
     {% endfor %}
 
 

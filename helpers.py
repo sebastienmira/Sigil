@@ -40,3 +40,9 @@ def login_required(f):
         return f(*args, **kwargs)
 
     return decorated_function
+
+
+
+with open("large.txt") as file:
+    dictionary=file.read()
+dictionary=set(dictionary.split("\n"))

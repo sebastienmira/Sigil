@@ -1,18 +1,18 @@
 import crypto
 
-dictionary=""
+
 with open("large.txt") as file:
     dictionary=file.read()
-
-
-
+    dictionary=set(dictionary.split("\n"))
+print(len(dictionary))
+'''
 freqList=crypto.sortedFreq(dictionary,26)
 freqInDict=[]
 for i in freqList:
     freqInDict.append(i[0])
 
 print(freqList)
-
+'''
 
 
 
