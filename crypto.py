@@ -176,8 +176,15 @@ texto='The Rosetta Stone is a stele composed of granodiorite inscribed with thre
 
 text=substitution(texto,'ghada')
 
+
+'''
+import time
+start_time = time.time()
 print(guessVigenere(text,5,2))
 
+print("--- %s seconds ---" % (time.time() - start_time))
+
+'''
 #print(list(itertools.product(*guessVigenere(text,5,2))))
 
 #print(permutation(list(itertools.product(*guessVigenere(text,5,2)))))

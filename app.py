@@ -75,17 +75,21 @@ def decrypt():
 def analysis():
     if request.method =="POST":
         encrypted=request.form.get("encrypted")
-        analysis=crypto.frequencyAnalysis(encrypted)
+        keylength=int(request.form.get("keylength"))
+
+        analysis=crypto.frequencyAnalysisVigenere(encrypted,keylength)
         
-        img=io.BytesIO()
-        crypto.histFreqAnalysis(encrypted).savefig(img, format='png')
-        img.seek(0)
+        for i in range(keylength):
+            img=io.BytesIO()
+            crypto.histFreqAnalysis(encrypted[i]).savefig(img, format='png')
+            img.seek(0)
 
-        img_path = 'static/images/analysis.png'
-        with open(img_path, 'wb') as f:
-            f.write(img.getbuffer())
+            img_path = 'static/images/analysis.png'
+            with open(img_path, 'wb') as f:
+                f.write(img.getbuffer())
+                
 
-        return render_template("analysis.html", analysis=analysis, img_path=img_path)
+        return render_template("analysis.html", analysis=analysis, img_path=img_path, encrypted=encrypted, keylength=keylength)
     return render_template("analysis.html")
 
 

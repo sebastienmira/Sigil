@@ -7,8 +7,12 @@
 {% block main %}
     <div class="container">
         <form action="/analysis" method="post">
+
             <label for="encrypted">Encrypted text</label>
             <textarea class="form-control" id="encrypted" name="encrypted" rows="3" required>{{encrypted}}</textarea>
+
+            <label for="keylength">Key Length</label>
+            <input class="form-control" type="number" min="1" id="keylength" name="keylength" placeholder="length"> 
 
             <button class="btn" type="submit">Analyse</button>
         </form>
@@ -17,8 +21,27 @@
 
         {% if analysis %}
             <h2>Frequency Analysis:</h2>
-            <p>{{ analysis }}</p>
+            <table>
+                <thead>
+                    <tr>
+                        {% for letter, frequency in analysis[0].items() %}
+                            <th>{{letter}}</th>
+                        {% endfor %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for cell in analysis %}
+                        <tr>
+                            {% for letter, frequency in cell.items() %}
+                                <th>{{frequency}}</th>
+                            {% endfor %}
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         {% endif %}
+        
+
         
         {% if img_path %}
             <h2>Frequency Analysis Histogram:</h2>
