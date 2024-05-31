@@ -81,7 +81,7 @@ def analysis():
         
         for i in range(keylength):
             img=io.BytesIO()
-            crypto.histFreqAnalysis(encrypted[i]).savefig(img, format='png')
+            crypto.histFreqAnalysis(encrypted).savefig(img, format='png')
             img.seek(0)
 
             img_path = 'static/images/analysis.png'
@@ -205,7 +205,8 @@ def chat(chatid):
         key=request.form.get("key")
         if text and key:
             encrypted=crypto.substitution(text,key)
-            db.execute("INSERT INTO messages (chat_id,sender_id,message,datetime) VALUES(?,?,?,datetime())", chatid, session["user_id"], encrypted)
+            sender_username=db.execute("SELECT username FROM users WHERE id=? ", session["user_id"])[0]["username"]
+            db.execute("INSERT INTO messages (chat_id,sender_id,message,datetime,sender_username) VALUES(?,?,?,datetime(),?)", chatid, session["user_id"], encrypted,sender_username)
             messages=db.execute("SELECT * FROM messages WHERE chat_id=?", chatid)
             return render_template("chat.html", chatid=chatid, messages=messages, user=user)
         else:
@@ -213,3 +214,22 @@ def chat(chatid):
 
     else:
         return render_template("chat.html", chatid=chatid,messages=messages, user=user)
+
+
+'''CREATE TABLE users (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, username TEXT NOT NULL, hash TEXT NOT NULL);
+CREATE TABLE sqlite_sequence(name,seq);
+CREATE TABLE chats(
+id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+sender_id INTEGER NOT NULL,
+receiver_id INTEGER NOT NULL,
+FOREIGN KEY(sender_id) REFERENCES users(id),
+FOREIGN KEY(receiver_id) REFERENCES users(id));
+CREATE TABLE messages(
+id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+chat_id INTEGER NOT NULL,
+sender_id INTEGER NOT NULL,
+message TEXT NOT NULL,
+datetime NUMERIC,
+FOREIGN KEY(chat_id) REFERENCES chats(id),
+FOREIGN KEY(sender_id) REFERENCES users(id)
+);'''
