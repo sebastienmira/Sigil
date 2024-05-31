@@ -203,12 +203,22 @@ def chat(chatid):
     if request.method=="POST":
         text=request.form.get("text")
         key=request.form.get("key")
+        message_key=request.form.get("message-key")
+        message_text=request.form.get("message-text")
+
+        if message_key and message_text:
+            message_id=int(request.form.get("message-id"))
+            decrypted=crypto.desubstitution(message_text,message_key)
+            return render_template("chat.html", chatid=chatid, messages=messages, user=user, decrypted=decrypted, messageid=message_id)
+
+
         if text and key:
             encrypted=crypto.substitution(text,key)
             sender_username=db.execute("SELECT username FROM users WHERE id=? ", session["user_id"])[0]["username"]
             db.execute("INSERT INTO messages (chat_id,sender_id,message,datetime,sender_username) VALUES(?,?,?,datetime(),?)", chatid, session["user_id"], encrypted,sender_username)
             messages=db.execute("SELECT * FROM messages WHERE chat_id=?", chatid)
             return render_template("chat.html", chatid=chatid, messages=messages, user=user)
+        
         else:
             return render_template("chat.html", chatid=chatid, messages=messages, user=user)
 
