@@ -52,3 +52,12 @@ nav{
     color: #888;
     margin-top: 5px;
 }
+
+#message-key {
+    min-width: 10%;
+    width:fit-content;
+}
+
+.right > .message-decrypt > #selectForm> #message-key{
+    margin-left: auto;
+}
