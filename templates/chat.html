@@ -5,10 +5,19 @@
 {% endblock %}
 
 {% block main %}
+    <script>
+        function scrollToBottom() {
+            window.scrollTo(0, document.body.scrollHeight);
+        }
+        history.scrollRestoration = "manual";
+        window.onload = scrollToBottom;
+    </script>
+
+
     <h2>You are chating with {{user[0].username}}</h2>
 
-
-    {% for message in messages %}
+    <div class="messages">
+        {% for message in messages %}
         
         <div class="message{% if message.sender_username!=user[0].username %} right{% endif %}">
             <div class="message-user">{{message.sender_username}}</div>
@@ -18,23 +27,25 @@
                     <input type="hidden" name="message-id" value="{{message.id}}">
                     <input type="hidden" name="message-text" value="{{message.message}}">
                     <textarea class="form-control" id="message-key" name="message-key" rows="1"></textarea>
-                    <button class="btn" type="submit" value="">decrypt</button>
+                    <button class="btn" type="submit" value="">Decrypt</button>
                 </form>
             </div>
             <div class="message-date">{{message.datetime}}</div>
         </div>
     {% endfor %}
+    </div>
 
-
-    <form action="/chat/{{chatid}}" method="post">
-        <label for="text">Enter your message</label>
-        <textarea class="form-control" id="text" name="text" rows="1" required></textarea>
-        
-        <label for="key">Key</label>
-        <textarea class="form-control" id="key" name="key" rows="1" required></textarea>
-
-        <button class="btn" type="submit">Send</button>
-    </form>
+    <div class="send">
+        <form action="/chat/{{chatid}}" method="post">
+            <label for="text">Enter your message</label>
+            <textarea class="form-control" id="text" name="text" rows="1" required></textarea>
+            
+            <label for="key">Key</label>
+            <textarea class="form-control" id="key" name="key" rows="1" required></textarea>
+    
+            <button class="btn" type="submit">Send</button>
+        </form>
+    </div>
 
 
 {% endblock %}

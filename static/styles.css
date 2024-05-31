@@ -21,6 +21,10 @@ nav{
     max-width: 60%;
 }
 
+.messages{
+    margin-bottom: 170px;
+}
+
 .right {
     text-align: right;
     margin-left:auto;
@@ -31,7 +35,8 @@ nav{
     width:fit-content;
     border: 1px solid rgb(235, 236, 237);
     border-radius: 15px;
-    margin-top: 2px;
+    margin-top: 5px;
+    margin-bottom: 5px;
     padding: 3px 10px 3px 10px;
     background-color: rgb(235, 243, 243);
     color: rgb(125, 125, 125);
@@ -60,4 +65,20 @@ nav{
 
 .right > .message-decrypt > #selectForm> #message-key{
     margin-left: auto;
+}
+
+.send{
+    position: fixed;
+    bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.send> form> label{
+    font-weight: bold;
+}
+.send> form{
+    width: 60%;
 }
