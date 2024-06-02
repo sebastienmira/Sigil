@@ -42,7 +42,6 @@ def decrypt():
     keylength=request.form.get("keylength")
     plain = ""
     error = ""
-    
 
     if request.method =="POST":
         
@@ -62,9 +61,13 @@ def decrypt():
                 render_template("decrypt.html", mode=mode)
         
         elif mode=='vigenere':
+            keyguess=request.form.get("keyguess")
             if attempt and keylength:
                 guesses=crypto.guessVigenere(encrypted, key_length=int(keylength), attempts=int(attempt))
-                return render_template('decrypt.html', plain=guesses, encrypted=encrypted, mode=mode)
+                if keyguess:
+                    plainguess=crypto.desubstitution(encrypted,keyguess)
+                    return render_template('decrypt.html', plain=guesses, encrypted=encrypted, mode=mode, plainguess=plainguess, attempt=attempt, keylength=keylength, keyguess=keyguess)
+                return render_template('decrypt.html', plain=guesses, encrypted=encrypted, mode=mode, attempt=attempt, keyguess=keyguess ,keylength=keylength)
             else:
                 return render_template("decrypt.html", mode=mode)
 

@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 
 {% block title %}
-    Encrypt
+    Decrypt
 {% endblock %}
 
 {% block main %}
@@ -25,34 +25,48 @@
             {% endif %}
             {% if mode=='caeser' or mode=='vigenere' %}
                 <label for="attempts">Attempts</label>
-                <input class="form-control" type="number" min="1" id="attempts" name="attempts" placeholder="attempts">
+                <input class="form-control" type="number" min="1" id="attempts" name="attempts" value="{{attempt}}" placeholder="attempts">
             {% endif %}
             {% if mode=='vigenere' %}
                 <label for="keylength">Key Length</label>
-                <input class="form-control" type="number" min="1" id="keylength" name="keylength" placeholder="length">   
+                <input class="form-control" type="number" min="1" id="keylength" name="keylength" value="{{keylength}}" placeholder="length">   
+                <input type="hidden" id="keyguess" name="keyguess" value="{{keyguess}}">
             {% endif %}
             <button class="btn" type="submit">decrypt</button>
         </form>
 
         <div class="computed">
             {% if encrypted %}
-                <h4>Encrypted text:</h4>
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Key</th>
-                            <th>Likelihood</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for key in plain %}
+                {% if mode=='known' or mode=='caeser'%}
+                    <h4>Plain text:</h4>
+                    <p>{{plain}}</p>
+                {% endif %}
+                {% if mode=='vigenere' %}
+                    {% if plainguess %}
+                        <p>{{plainguess}}</p>
+                    {% endif %}
+                    <table class="table">
+                        <thead>
                             <tr>
-                                <td>{{key[0]}}</td>
-                                <td>{{key[1]}}</td>
+                                <th>Key</th>
+                                <th>Likelihood</th>
                             </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            {% for key in plain %}
+                                <tr>
+                                    <td>
+                                        <form action="/decrypt" id="guessForm" method="post">
+                                            <input type="hidden" name="keyguess" value="{{key[0]}}">
+                                            <button class="btn" type="button" onclick="submitGuess('{{ key[0] }}')">{{ key[0] }}</button>
+                                        </form>
+                                    </td>
+                                    <td>{{key[1]}}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% endif %}
             {% endif %} 
             {% if error %}
                 <h4>Error:</h4>
@@ -66,6 +80,11 @@
 
     <script>
         function submitSelectForm() {
+            document.getElementById('selectForm').submit();
+        }
+
+        function submitGuess(key) {
+            document.getElementById('keyguess').value = key;
             document.getElementById('selectForm').submit();
         }
     </script>
