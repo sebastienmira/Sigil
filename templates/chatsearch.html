@@ -18,7 +18,7 @@
         {% for chat in chats %}
             <form action="/chat" method="post">
                 <input type="hidden" name="user-active" value="{{chat.username}}">
-                <button class="btn" type="submit">{{chat.username}}</button>
+                <button class="btn userchat" type="submit">{{chat.username}}</button>
             </form>
         {% endfor %}
 

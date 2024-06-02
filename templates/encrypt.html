@@ -17,13 +17,17 @@
         </form>
 
 
-        {% if encrypted %}
-            <h4>Encrypted text:</h4>
-            <p>{{encrypted}}</p>
-        {% endif %} 
-        {% if error %}
-            <h4>Error:</h4>
-            <p>{{error}}</p>
-        {% endif %} 
+        <div class="computed">
+            {% if encrypted %}
+                <h4>Encrypted text:</h4>
+                <p>{{encrypted}}</p>
+            {% endif %} 
+
+            
+            {% if error %}
+                <h4>Error:</h4>
+                <p>{{error}}</p>
+            {% endif %} 
+        </div>
     </div>
 {% endblock %}

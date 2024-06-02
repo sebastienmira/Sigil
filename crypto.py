@@ -143,7 +143,7 @@ def guessVigenere(text, key_length, attempts=1):
         words=decrypted_text.split(" ")
         ctr=0
         for j in range(len(words)):
-            if(check_word(words[j])):
+            if(check_word(words[j].strip(",.;:?!()/%\"\'"))):
                 ctr+=1
         matched_words.append(round(ctr/len(words),2))
     

@@ -76,9 +76,27 @@ nav{
     width: 100%;
 }
 
-.send> form> label{
+label{
     font-weight: bold;
 }
 .send> form{
     width: 60%;
+}
+
+
+.active-chats{
+    margin-top: 60px;
+}
+
+.btn{
+    background-color: hsl(189, 32%, 83%);
+    margin: 5px;
+}
+
+.userchat{
+    background-color: #92e3e6db;
+}
+
+.computed{
+    margin-top: 50px;
 }
