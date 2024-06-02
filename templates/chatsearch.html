@@ -5,9 +5,24 @@
 {% endblock %}
 
 {% block main %}
+    <h2>Search users</h2>
     <form action="/chat" method="post">
         <input class="form-control" type="text" id="user" name="user" placeholder="username" required>
         <button class="btn" type="submit">Search</button>
     </form>
+
+
+    <div class="active-chats">
+        <h2>Active chats</h2>
+
+        {% for chat in chats %}
+            <form action="/chat" method="post">
+                <input type="hidden" name="user-active" value="{{chat.username}}">
+                <button class="btn" type="submit">{{chat.username}}</button>
+            </form>
+        {% endfor %}
+
+    </div>
+    
 
 {% endblock %}

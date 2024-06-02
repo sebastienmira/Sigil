@@ -177,29 +177,38 @@ def logout():
 @app.route("/chat", methods=["GET", "POST"])
 @login_required
 def search():
+    myuserid=session["user_id"]
+    chats=db.execute("SELECT username FROM users WHERE (id = (SELECT sender_id FROM chats WHERE receiver_id=?) OR (SELECT receiver_id FROM chats WHERE sender_id=?))", myuserid, myuserid)
     if request.method=="POST":
        user=request.form.get("user")
-       myuserid=session["user_id"]
-       userid=db.execute("SELECT id FROM users WHERE username = ?", user)
-       if userid:
+       useractive=request.form.get("user-active")
+       if useractive:
+           useractiveid=db.execute("SELECT id FROM users WHERE username = ?", useractive)[0]["id"]
+           chatid=db.execute("SELECT id FROM chats WHERE (sender_id=? AND receiver_id=?) OR (sender_id=? AND receiver_id=?)", useractiveid, myuserid, myuserid, useractiveid)
+           return redirect(url_for("chat",chatid=chatid[0]["id"], user=useractive))
+       
+       elif user:
+        userid=db.execute("SELECT id FROM users WHERE username = ?", user)
+        if userid:
             userid=userid[0]["id"]
             chatid=db.execute("SELECT id FROM chats WHERE (sender_id=? AND receiver_id=?) OR (sender_id=? AND receiver_id=?)", userid, myuserid, myuserid, userid)
             if chatid:
-                return redirect(url_for("chat",chatid=chatid[0]["id"]))
+                return redirect(url_for("chat",chatid=chatid[0]["id"], user=user))
             else:
                 db.execute("INSERT INTO chats(sender_id,receiver_id) VALUES(?,?)", myuserid, userid)
                 chatid=db.execute("SELECT id FROM chats WHERE sender_id=? AND receiver_id=?", myuserid, userid)
-                return redirect(url_for("chat",chatid=chatid[0]["id"]))
-       else:
-           return apology("user not found",400)
+                return redirect(url_for("chat",chatid=chatid[0]["id"], user=user))
+        else:
+            return apology("user not found",400)
     else:
-       return render_template("chatsearch.html")
+       return render_template("chatsearch.html",chats=chats)
    
 @app.route("/chat/<chatid>", methods=["GET", "POST"])
 @login_required
 def chat(chatid):
     messages=db.execute("SELECT * FROM messages WHERE chat_id=?", chatid)
-    user=db.execute("SELECT username FROM users WHERE (id = (SELECT sender_id FROM chats WHERE id=?) OR (SELECT receiver_id FROM chats WHERE id=?)) AND id!=?", chatid, chatid, session["user_id"])
+    #user=db.execute("SELECT username FROM users WHERE (id = (SELECT sender_id FROM chats WHERE id=?) OR (SELECT receiver_id FROM chats WHERE id=?)) AND id!=?", chatid, chatid, session["user_id"])
+    user=request.args.get("user")
     if request.method=="POST":
         text=request.form.get("text")
         key=request.form.get("key")

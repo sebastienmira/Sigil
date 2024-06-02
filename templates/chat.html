@@ -14,12 +14,12 @@
     </script>
 
 
-    <h2>You are chating with {{user[0].username}}</h2>
+    <h2>You are chatting with {{user}}</h2>
 
     <div class="messages">
         {% for message in messages %}
         
-        <div class="message{% if message.sender_username!=user[0].username %} right{% endif %}">
+        <div class="message{% if message.sender_username!=user %} right{% endif %}">
             <div class="message-user">{{message.sender_username}}</div>
             <div class="message-text">{% if decrypted and messageid==message.id %} {{decrypted}} {% else %} {{message.message}} {% endif %}</div>
             <div class="message-decrypt">

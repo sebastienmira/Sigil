@@ -27,8 +27,11 @@
           <a class="nav-item nav-link" href="/decrypt">Decrypt</a>
           <a class="nav-item nav-link" href="/analysis">Analysis</a>
           <a class="nav-item nav-link" href="/chat">Chat</a>
-          <a class="nav-item nav-link" href="/login">Login</a>
-          <a class="nav-item nav-link" href="/logout">Logout</a>
+          {% if session["user_id"] %}
+            <a class="nav-item nav-link" href="/logout">Logout</a>
+          {% else %}
+            <a class="nav-item nav-link" href="/login">Login</a>
+          {% endif %}
         </div>
       </div>
     </nav>
