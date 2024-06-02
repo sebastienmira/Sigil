@@ -12,8 +12,7 @@
         <form action="/decrypt" id='selectForm' method="post">
             <select class="form-control" name="mode" onchange="submitSelectForm()">
                 <option value="known" {% if mode == 'known' %}selected{% endif %}>Known key</option>
-                <option value="caeser" {% if mode=='caeser' %}selected{% endif %}>Guess Caeser</option>
-                <option value="vigenere" {% if mode=='vigenere' %}selected{% endif %}>Guess Vigenere</option>
+                <option value="guess" {% if mode=='guess' %}selected{% endif %}>Guess</option>
             </select>
 
             
@@ -23,11 +22,10 @@
                 <label for="key">Key</label>
                 <textarea class="form-control" id="key" name="key" rows="3">{{key}}</textarea>
             {% endif %}
-            {% if mode=='caeser' or mode=='vigenere' %}
+
+            {% if mode=='guess' %}
                 <label for="attempts">Attempts</label>
                 <input class="form-control" type="number" min="1" id="attempts" name="attempts" value="{{attempt}}" placeholder="attempts">
-            {% endif %}
-            {% if mode=='vigenere' %}
                 <label for="keylength">Key Length</label>
                 <input class="form-control" type="number" min="1" id="keylength" name="keylength" value="{{keylength}}" placeholder="length">   
                 <input type="hidden" id="keyguess" name="keyguess" value="{{keyguess}}">
@@ -37,11 +35,11 @@
 
         <div class="computed">
             {% if encrypted %}
-                {% if mode=='known' or mode=='caeser'%}
+                {% if mode=='known'%}
                     <h4>Plain text:</h4>
                     <p>{{plain}}</p>
                 {% endif %}
-                {% if mode=='vigenere' %}
+                {% if mode=='guess' %}
                     {% if plainguess %}
                         <p>{{plainguess}}</p>
                     {% endif %}
