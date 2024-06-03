@@ -3,3 +3,32 @@
 {% block title %}
     Home
 {% endblock %}
+
+{% block main %}
+
+{% if session["user_id"] %}
+    <div class="welcome">
+        <h3>Welcome {{username}}</h3>
+    </div>
+{% endif %}
+
+
+<div class="text-container">
+    <p>Sigil is a web-application made for cryptography lovers.</p>
+    <p>
+        In the current version, you can encrypt, decrypt text using substitution ciphers like the Vigenere or Caeser cipher.
+        You can also analyse the letter frequency in any given text in the analysis section.
+        Moreover, you can create an account and chat with your friends in secrecy. The chat allows you to encrypt your messages with a personal key and to decrypt the received messages.
+    </p>
+    <p>
+        The decryption tools allow you to guess an unknown key. 
+        
+        The app performs a cryptanalytic attack to the text and returns a list of possible keys with the respect likeability that they were used to encrypt the given text.
+        The likeability was defined as the ratio between decrypted words and words existing in an english dictionary.
+        This tool is optimized for texts in English since the frequency analysis is compared to the english letter frequency.
+    </p>
+    <p>
+        lpgb'd s ouwo kbgze. wvpwj!
+    </p>
+</div>
+{% endblock %}

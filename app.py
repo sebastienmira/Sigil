@@ -16,7 +16,11 @@ db= SQL("sqlite:///crypto.db")
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    try:
+        username=db.execute("SELECT username FROM users WHERE id=?", session["user_id"])[0]["username"]
+        return render_template('index.html', username=username)
+    except:
+        return render_template('index.html')
 
 
 @app.route('/encrypt', methods=["GET","POST"])
@@ -122,6 +126,7 @@ def login():
         ):
             return apology("invalid username and/or password", 403)
         session["user_id"] = rows[0]["id"]
+        
         return redirect("/")
     else:
         return render_template("login.html")

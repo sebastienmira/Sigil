@@ -114,3 +114,12 @@ label{
 .chat-head{
     margin-top: -40px;
 }
+
+.welcome{
+    margin: 50px;
+}
+
+.text-container{
+    margin: 50px;
+    max-width: 50%;
+}
