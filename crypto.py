@@ -180,11 +180,11 @@ text=substitution(texto,'ghada')
 '''
 import time
 start_time = time.time()
-print(guessVigenere(text,5,2))
+print(guessVigenere(text,3,26))
 
 print("--- %s seconds ---" % (time.time() - start_time))
-
 '''
+
 #print(list(itertools.product(*guessVigenere(text,5,2))))
 
 #print(permutation(list(itertools.product(*guessVigenere(text,5,2)))))

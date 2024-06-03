@@ -41,29 +41,33 @@
                 {% endif %}
                 {% if mode=='guess' %}
                     {% if plainguess %}
+                        <h4>Guess:</h4>
                         <p>{{plainguess}}</p>
                     {% endif %}
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Key</th>
-                                <th>Likelihood</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for key in plain %}
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
                                 <tr>
-                                    <td>
-                                        <form action="/decrypt" id="guessForm" method="post">
-                                            <input type="hidden" name="keyguess" value="{{key[0]}}">
-                                            <button class="btn" type="button" onclick="submitGuess('{{ key[0] }}')">{{ key[0] }}</button>
-                                        </form>
-                                    </td>
-                                    <td>{{key[1]}}</td>
+                                    <th>Key</th>
+                                    <th>Likelihood</th>
                                 </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                {% for key in plain %}
+                                    <tr>
+                                        <td>
+                                            <form action="/decrypt" id="guessForm" method="post">
+                                                <input type="hidden" name="keyguess" value="{{key[0]}}">
+                                                <button class="btn" type="button" onclick="submitGuess('{{ key[0] }}')">{{ key[0] }}</button>
+                                            </form>
+                                        </td>
+                                        <td>{{key[1]}}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    
                 {% endif %}
             {% endif %} 
             {% if error %}

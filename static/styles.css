@@ -100,3 +100,7 @@ label{
 .computed{
     margin-top: 50px;
 }
+
+.table-responsive{
+    max-height: 250px;
+}
