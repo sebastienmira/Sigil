@@ -21,9 +21,6 @@ nav{
     max-width: 60%;
 }
 
-.messages{
-    margin-bottom: 170px;
-}
 
 .right {
     text-align: right;
@@ -103,4 +100,17 @@ label{
 
 .table-responsive{
     max-height: 250px;
+    margin-bottom: 50px;
+}
+
+.plainguess{
+    margin-bottom: 50px;
+}
+
+.overflow-auto{
+    max-height: 30vw;
+}
+
+.chat-head{
+    margin-top: -40px;
 }

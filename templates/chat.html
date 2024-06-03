@@ -7,33 +7,38 @@
 {% block main %}
     <script>
         function scrollToBottom() {
-            window.scrollTo(0, document.body.scrollHeight);
+            var messagesDiv = document.getElementById('message-container');
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
         }
         history.scrollRestoration = "manual";
         window.onload = scrollToBottom;
     </script>
 
 
-    <h2>You are chatting with {{user}}</h2>
+    <h3 class="chat-head">You are chatting with {{user}}</h3>
 
-    <div class="messages">
-        {% for message in messages %}
-        
-        <div class="message{% if message.sender_username!=user %} right{% endif %}">
-            <div class="message-user">{{message.sender_username}}</div>
-            <div class="message-text">{% if decrypted and messageid==message.id %} {{decrypted}} {% else %} {{message.message}} {% endif %}</div>
-            <div class="message-decrypt">
-                <form action="/chat/{{chatid}}" class="message-form" id='selectForm' method="post">
-                    <input type="hidden" name="message-id" value="{{message.id}}">
-                    <input type="hidden" name="message-text" value="{{message.message}}">
-                    <textarea class="form-control" id="message-key" name="message-key" rows="1"></textarea>
-                    <button class="btn" type="submit" value="">Decrypt</button>
-                </form>
+    <div class="overflow-auto" id="message-container">
+        <div class="messages">
+            {% for message in messages %}
+            
+            <div class="message{% if message.sender_username!=user %} right{% endif %}">
+                <div class="message-user">{{message.sender_username}}</div>
+                <div class="message-text">{% if decrypted and messageid==message.id %} {{decrypted}} {% else %} {{message.message}} {% endif %}</div>
+                <div class="message-decrypt">
+                    <form action="/chat/{{chatid}}" class="message-form" id='selectForm' method="post">
+                        <input type="hidden" name="user" value="{{user}}">
+                        <input type="hidden" name="message-id" value="{{message.id}}">
+                        <input type="hidden" name="message-text" value="{{message.message}}">
+                        <textarea class="form-control" id="message-key" name="message-key" rows="1" required></textarea>
+                        <button class="btn" type="submit" value="">Decrypt</button>
+                    </form>
+                </div>
+                <div class="message-date">{{message.datetime}}</div>
             </div>
-            <div class="message-date">{{message.datetime}}</div>
+        {% endfor %}
         </div>
-    {% endfor %}
     </div>
+
 
     <div class="send">
         <form action="/chat/{{chatid}}" method="post">
@@ -42,7 +47,9 @@
             
             <label for="key">Key</label>
             <textarea class="form-control" id="key" name="key" rows="1" required></textarea>
-    
+            
+            <input type="hidden" name="user" value="{{user}}">
+
             <button class="btn" type="submit">Send</button>
         </form>
     </div>

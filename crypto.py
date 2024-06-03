@@ -67,10 +67,17 @@ def histFreqAnalysis(encrypted, normalize=False): #histogram for frquency analys
        frequencies.append(freqAnalysis[i])
     if normalize==True:
         frequencies=[i/sum(frequencies) for i in frequencies]
-    fig=plt.figure()
-    ax = fig.add_subplot(1,1,1)
-    ax.plot(alphabet,frequencies, linestyle='',marker='')
-    ax.stairs(frequencies, color='black')
+    
+    fig, ax = plt.subplots()
+    ax.bar(np.arange(len(alphabet)), frequencies, align='center', color='black')
+    
+    ax.set_xticks(np.arange(len(alphabet)))
+    ax.set_xticklabels(alphabet)
+    
+    plt.xlabel('Alphabet')
+    plt.ylabel('Frequency')
+    plt.title('Frequency Analysis Histogram')
+
     return fig
 
 
@@ -176,7 +183,7 @@ texto='The Rosetta Stone is a stele composed of granodiorite inscribed with thre
 
 text=substitution(texto,'ghada')
 
-
+print(text)
 '''
 import time
 start_time = time.time()

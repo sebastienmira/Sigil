@@ -35,7 +35,7 @@ def encrypt():
 
 @app.route('/decrypt', methods=["GET","POST"])
 def decrypt():
-    mode = request.form.get("mode")
+    mode = request.form.get("mode","known")
     encrypted = request.form.get("encrypted", "")
     key = request.form.get("key", "a")
     attempt = request.form.get("attempts")
@@ -73,12 +73,21 @@ def analysis():
     if request.method =="POST":
         encrypted=request.form.get("encrypted")
         keylength=int(request.form.get("keylength"))
+        row=int(request.form.get("row"))
+        try:
+            row = int(row)
+            if row <= 0:
+                raise ValueError
+        except (ValueError, TypeError):
+            row = 1
+
+        encryptedrows=crypto.splitRows(encrypted,keylength)
 
         analysis=crypto.frequencyAnalysisVigenere(encrypted,keylength)
         
-        for i in range(keylength):
+        if row:
             img=io.BytesIO()
-            crypto.histFreqAnalysis(encrypted).savefig(img, format='png')
+            crypto.histFreqAnalysis(encryptedrows[(row-1)]).savefig(img, format='png')
             img.seek(0)
 
             img_path = 'static/images/analysis.png'
@@ -86,45 +95,34 @@ def analysis():
                 f.write(img.getbuffer())
 
 
-        return render_template("analysis.html", analysis=analysis, img_path=img_path, encrypted=encrypted, keylength=keylength)
+            return render_template("analysis.html", analysis=analysis, img_path=img_path, encrypted=encrypted, keylength=keylength)
+        
+        else:
+            return render_template("analysis.html", analysis=analysis, encrypted=encrypted, keylength=keylength)
     return render_template("analysis.html")
 
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
-    """Log user in"""
-
-    # Forget any user_id
     session.clear()
 
-    # User reached route via POST (as by submitting a form via POST)
     if request.method == "POST":
-        # Ensure username was submitted
+
         if not request.form.get("username"):
             return apology("must provide username", 403)
 
-        # Ensure password was submitted
         elif not request.form.get("password"):
             return apology("must provide password", 403)
 
-        # Query database for username
         rows = db.execute(
             "SELECT * FROM users WHERE username = ?", request.form.get("username")
         )
-
-        # Ensure username exists and password is correct
         if len(rows) != 1 or not check_password_hash(
             rows[0]["hash"], request.form.get("password")
         ):
             return apology("invalid username and/or password", 403)
-
-        # Remember which user has logged in
         session["user_id"] = rows[0]["id"]
-
-        # Redirect user to home page
         return redirect("/")
-
-    # User reached route via GET (as by clicking a link or via redirect)
     else:
         return render_template("login.html")
     
@@ -162,12 +160,7 @@ def register():
         return render_template("register.html")    
 @app.route("/logout")
 def logout():
-    """Log user out"""
-
-    # Forget any user_id
     session.clear()
-
-    # Redirect user to login form
     return redirect("/")
 
 
@@ -204,13 +197,13 @@ def search():
 @login_required
 def chat(chatid):
     messages=db.execute("SELECT * FROM messages WHERE chat_id=?", chatid)
-    #user=db.execute("SELECT username FROM users WHERE (id = (SELECT sender_id FROM chats WHERE id=?) OR (SELECT receiver_id FROM chats WHERE id=?)) AND id!=?", chatid, chatid, session["user_id"])
     user=request.args.get("user")
     if request.method=="POST":
         text=request.form.get("text")
         key=request.form.get("key")
         message_key=request.form.get("message-key")
         message_text=request.form.get("message-text")
+        user=request.form.get("user")
 
         if message_key and message_text:
             message_id=int(request.form.get("message-id"))

@@ -6,13 +6,15 @@
 
 {% block main %}
     <div class="container">
-        <form action="/analysis" method="post">
+        <form action="/analysis" id="analysisForm" method="post">
 
             <label for="encrypted">Encrypted text</label>
             <textarea class="form-control" id="encrypted" name="encrypted" rows="3" required>{{encrypted}}</textarea>
 
             <label for="keylength">Key Length</label>
-            <input class="form-control" type="number" min="1" id="keylength" name="keylength" placeholder="length"> 
+            <input class="form-control" type="number" min="1" id="keylength" name="keylength" placeholder="length" value="{{keylength}}"> 
+
+            <input type="hidden" id="row" name="row" value="1">
 
             <button class="btn" type="submit">Analyse</button>
         </form>
@@ -24,6 +26,7 @@
             <table class="table">
                 <thead>
                     <tr>
+                        <th>Rows</th>
                         {% for letter, frequency in analysis[0].items() %}
                             <th>{{letter}}</th>
                         {% endfor %}
@@ -32,6 +35,11 @@
                 <tbody>
                     {% for cell in analysis %}
                         <tr>
+                            <th>
+                                <form action="/analysis" id="row" method="post">
+                                    <button class="btn" type="button" onclick="submitRow('{{loop.index}}')">{{loop.index}}</button>
+                                </form>
+                            </th>
                             {% for letter, frequency in cell.items() %}
                                 <td>{{frequency}}</td>
                             {% endfor %}
@@ -49,4 +57,12 @@
         {% endif %} 
 
     </div>
+
+
+    <script>
+        function submitRow(row) {
+            document.getElementById('row').value = row;
+            document.getElementById('analysisForm').submit();
+        }
+    </script>
 {% endblock %}
