@@ -4,7 +4,7 @@
 
 This is my final project for CS50X 2024. Sigil, a web application for classical cryptography enthusiasts.
 
-One of my favourite hobbies as a child was to crack and design secret codes with my closest friends. Sigil provides with helpful tools to encrypt, decrypt and analyse messages and allows you to challenge your code-breaker friends wherever they are in the world.
+One of my favourite hobbies as a child was to crack and come up with secret codes with my friends. Sigil provides helpful tools to encrypt, decrypt and analyse messages and allows you to challenge your code-breaker friends wherever they are in the world.
 
 The current version of the app supports Vigenere type substitution ciphers. The cryptanalytic tools are optimized for English plaintext.
 
