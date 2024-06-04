@@ -34,8 +34,8 @@ In this project I tried to consolidate the different topics introduced in CS50:
 - Allows the user to perform a manual analysis of the text.
 
 ### Chat
-Users can create an account in Sigil and chat with eachother.
--Allows for in-chat encryption and decryption.
--Messages are encrypted before being sent.
--Allows the users the privacy of encrypted text. 
--Allows "code-breakers" to challenge eachother with their own ciphers.
+Users can create an account in Sigil and chat with eachother:
+- Allows for in-chat encryption and decryption.
+- Messages are encrypted before being sent.
+- Allows the users the privacy of encrypted text. 
+- Allows "code-breakers" to challenge eachother with their own ciphers.
