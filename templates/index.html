@@ -14,19 +14,51 @@
 
 
 <div class="text-container">
-    <p>Sigil is a web-application made for cryptography lovers.</p>
+    <div class="intro">
+        <p><b>Sigil</b> is a web-application made for cryptography lovers.</p>
+        <p>
+            One of my favourite hobbies as a child was to crack and come up with 
+            secret codes with my friends. Sigil provides you helpful tools to 
+            encrypt, decrypt and analyse messages. Moreover it allows you to challenge your code-breaker 
+            friends wherever they are in the world.
+        </p>
+    </div>
+
+    <h3 class="features">Features</h3> 
+
+    <h4>Encrypt</h4>
+    <p> Allows you to encrypt any text using an alphabetic key like a Vigenere cipher.</p>
+
+    <h4>Decrypt</h4>
+    <ul>
+        <li> The "known" mode allows you to decrypt a text using a known (Vigenere) key.
+        </li>
+        <li>The "guess" mode runs a frequency analytical attack.</li>
+    </ul>
     <p>
-        In the current version, you can encrypt, decrypt text using substitution ciphers like the Vigenere or Caeser cipher.
-        You can also analyse the letter frequency in any given text in the analysis section.
-        Moreover, you can create an account and chat with your friends in secrecy. The chat allows you to encrypt your messages with a personal key and to decrypt the received messages.
+        The guess mode takes as input a key length and the number of attempts used to compare the letter frequency over the rows of text with the english letter frequency. It then returns a table with the most likely keys computed and the likelihood for it to be the decryption key.
     </p>
     <p>
-        The decryption tools allow you to guess an unknown key. 
-        
-        The app performs a cryptanalytic attack to the text and returns a list of possible keys with the respect likeability that they were used to encrypt the given text.
-        The likeability was defined as the ratio between decrypted words and words existing in an english dictionary.
-        This tool is optimized for texts in English since the frequency analysis is compared to the english letter frequency.
+        The likelihood value is the ratio between words in the text and English words.
     </p>
+
+    <h4>Analysis</h4>
+    <ul>
+        <li>Perform a frequency analysis of the text.</li>
+        <li>Visualise the data with tables or histograms.</li>
+        <li>Allows the user to perform a manual analysis of the text.</li>
+    </ul>
+
+
+    <h4>Chat</h4>
+    <ul>
+        <li>Allows for in-chat encryption and decryption.</li>
+        <li>Messages are encrypted before being sent.</li>
+        <li>Allows the users the privacy of encrypted text.</li>
+        <li>Allows "code-breakers" to challenge eachother with their own ciphers.</li>
+    </ul>
+
+    <p>Create an account and challenge your peers.</p>
     <p>
         lpgb'd s ouwo kbgze. wvpwj!
     </p>

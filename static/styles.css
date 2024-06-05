@@ -123,3 +123,33 @@ label{
     margin: 50px;
     max-width: 50%;
 }
+
+.loginform{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.centered{
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+a{
+    text-decoration: none;
+    color: #275372db;
+}
+
+.btn-primary{
+    background-color: #275372db;
+}
+
+.intro{
+    margin-bottom: 20px;
+    font-size: large;
+}
+
+.features{
+    margin-bottom:15px;
+}
