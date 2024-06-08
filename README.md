@@ -12,7 +12,7 @@ In this project I tried to consolidate the different topics introduced in CS50:
 - Flask: the app was developed using the Flask micro-framework.
 - Algorithms: particularly of use to develop the frequency attacks.
 - Python: the development of the crypto.py file which functions as a cryptography library for the application.
-- HTML, CSS and JavaScript: templates and static folder. There is some JS script within the HTML files. Mostly used to properly earn the form submissions.
+- HTML, CSS and JavaScript: templates and static folder. There is some JS script within the HTML files. Mostly used to properly handle the form submissions.
 - Databases: Designed a database to handle the creation of users, manage different chats and messages between users.
 - ...
 
@@ -68,7 +68,7 @@ The likelihood for each of this strings to be the actual key is then calculated.
 I imported two functions from the finance assignment in CS50 `apology` and `login_required`. I also stored a large dictionary of english words in this file.
 
 ### crypto.db
-This is the database of the file:
+This is the database.
 Here is the schema used to create its tables:
 
 ```
