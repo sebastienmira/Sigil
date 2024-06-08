@@ -47,4 +47,4 @@ Users can create an account in Sigil and chat with eachother:
 
 The cryptographic functions were all implemented in this file which functions as a cryptography library.
 
-A list of the most common letters in a large english dictionary is defined as 'freq_in_dict' on the begining of the file. 
+A list of the most common letters in a large english dictionary is defined as `freq_in_dict` on the begining of the file. 
