@@ -39,3 +39,12 @@ Users can create an account in Sigil and chat with eachother:
 - Messages are encrypted before being sent.
 - Allows the users the privacy of encrypted text. 
 - Allows "code-breakers" to challenge eachother with their own ciphers.
+
+
+## About the files in this repo
+
+### crypto.py
+
+The cryptographic functions were all implemented in this file which functions as a cryptography library.
+
+A list of the most common letters in a large english dictionary is defined as 'freq_in_dict' on the begining of the file. 
